@@ -3,7 +3,7 @@ import './App.css';
 import {Route, Link} from 'react-router-dom';
 import Signin from './signin';
 import Navbar from './Navbar';
-import Browse from './Browse';
+import MovieList from './MovieList';
 import MyList from './MyList';
 
 
@@ -13,8 +13,8 @@ class App extends Component {
       <div>
        <Navbar />
 
-       <Route path='/browse' component={Browse} />
-       <Route path='./mymovies' component={MyList} />
+       <Route path='/browse' component={MovieList} />
+       <Route path='/mymovies' component={MyList} />
       </div>
     );
   }
