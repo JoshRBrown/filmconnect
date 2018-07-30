@@ -1,11 +1,11 @@
+
 const dotenv = require('dotenv');
 dotenv.config();
-
+const db = require('./db');
 const express = require('express');
 const app = express();
 const static = express.static;
 const rp = require('request-promise');
-const apiURL = 'https://gateway.marvel.com/v1/public/';
 const apiKey = process.env.API_KEY;
 const setupAuth = require('./auth');
 const ensureAuthenticated = require('./auth').ensureAuthenticated;
@@ -41,4 +41,5 @@ app.get('/api/logout', (req, res) => {
 //server initialization
 app.listen(process.env.PORT, () => {
     console.log(`Your server is running at http://localhost:${process.env.PORT}`);
+
 });
