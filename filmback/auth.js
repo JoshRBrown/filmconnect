@@ -1,12 +1,11 @@
 const passport = require('passport');
-const GithubStrategy = require('passport-github').Strategy;
+// const GithubStrategy = require('passport-github').Strategy;
 const session = require('express-session');
 var FileStore = require('session-file-store')(session);
-// const GoogleStrategy = require('passport-google-oauth20').Strategy
-// const FacebookStrategy = require('passport-facebook').Strategy;
-const { 
-  getUser,
-  addNewUser } = require('./db')
+const FacebookStrategy = require('passport-facebook').Strategy;
+// const { 
+//   getUser,
+//   addNewUser } = require('./db')
 
 // const cookieParser = require('cookie-parser')
 // const users = require('./users');
@@ -27,29 +26,30 @@ const setupAuth = (app) => {
   }));
 
   // #3 set up passport strategy
-  passport.use(new GithubStrategy({
+  passport.use(new FacebookStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
     callbackURL: process.env.CALLBACK_URL
   }, (accessToken, refreshToken, profile, done) => {
-    let theUser = getUser(profile.id);
-    theUser
-      .then(data => {
-        if (data) {
-          return console.log('user found');
-        } else {
-          return addNewUser(profile.username,profile.displayName, profile.photos[0].value, profile.id)
-            .then(userData => {
-              return
-            })
-            .catch(error => {
-              return console.log(error.message);
-            })
-        }
-      })
-      .catch(error => {
-        console.log(error.message);
-      })
+    // let theUser = getUser(profile.id);
+    // theUser
+    //   .then(data => {
+    //     if (data) {
+    //       return console.log('user found');
+    //     } else {
+    //       return addNewUser(profile.username,profile.displayName, profile.photos[0].value, profile.id)
+    //         .then(userData => {
+    //           return
+    //         })
+    //         .catch(error => {
+    //           return console.log(error.message);
+    //         })
+    //     }
+    //   })
+    //   .catch(error => {
+    //     console.log(error.message);
+    //   })
+    
       // console.log(theUser);
       // if (theUser) {
       //   return console.log(`Found ${profile.username} in database.`)
@@ -111,21 +111,22 @@ const setupAuth = (app) => {
   app.use(passport.session());
 
   // #8 register our login, logout, and auth routes
-  app.get('/login', passport.authenticate('github'));
+  app.get('/api/login', passport.authenticate('facebook'));
 
-  app.get('/logout', function(req, res, next) {
+  app.get('/api/logout', function(req, res, next) {
     console.log('logging out');
     req.logout();
-    res.redirect('/');
+    // res.redirect('/api/login');
+    res.send('logged out')
   });
 
-  // Our auth route is what Github will redirect to after the user logs in
+  // Our auth route is what Facebook will redirect to after the user logs in
   // and says it's ok to use our app.
-  // This is treated as a protected route because we have to confirm that Github
+  // This is treated as a protected route because we have to confirm that Facebook
   // actually said it was ok.
   // The actual route handler is just going to redirect us to the home page.
-  app.get('/github/auth',
-    passport.authenticate('github', { failureRedirect: '/login' }),
+  app.get('/facebook/auth',
+    passport.authenticate('facebook', { failureRedirect: '/login' }),
     (req, res) => {
       // if you don't have your own route handler after the passport.authenticate middleware
       // then you get stuck in the infinite loop
@@ -135,13 +136,14 @@ const setupAuth = (app) => {
       req.session.save(() => {
         // make sure the session is saved
         // before we send them to the homepage!
-        res.redirect('/');
+        // res.redirect('/');
+        res.send(req.session.passport.user);
       });
     }
   );
 
   // That's it.
-  // That's the end of our passport setup for github
+  // That's the end of our passport setup for Facebook
 }
 
 
@@ -159,7 +161,8 @@ const ensureAuthenticated = (req, res, next) => {
 
     console.log('clearly, they are not authenticated');
     // denied. redirect to login
-    res.redirect('/');
+    // res.redirect('/');
+    res.send('user not authenticated');
 }
 
 // Our default export is the `setupAuth` function.
