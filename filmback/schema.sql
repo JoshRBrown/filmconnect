@@ -1,5 +1,5 @@
 CREATE TABLE users (
-  user_id INT PRIMARY KEY,
+  user_id varchar PRIMARY KEY,
   user_name varchar(50) NOT NULL
 );
 
@@ -11,7 +11,7 @@ CREATE TABLE movies (
   poster varchar
 );
 CREATE TABLE reviews (
-  user_id int NOT NULL REFERENCES users(user_id),
+  user_id varchar NOT NULL REFERENCES users(user_id),
   movie_id int NOT NULL REFERENCES movies(movie_id),
   rating int NOT NULL,
   comment varchar(250)
