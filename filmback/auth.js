@@ -3,9 +3,9 @@ const passport = require('passport');
 const session = require('express-session');
 var FileStore = require('session-file-store')(session);
 const FacebookStrategy = require('passport-facebook').Strategy;
-// const { 
-//   getUser,
-//   addNewUser } = require('./db')
+const { 
+  getUser,
+  insertUser } = require('./db')
 
 // const cookieParser = require('cookie-parser')
 // const users = require('./users');
@@ -31,41 +31,28 @@ const setupAuth = (app) => {
     clientSecret: process.env.CLIENT_SECRET,
     callbackURL: process.env.CALLBACK_URL
   }, (accessToken, refreshToken, profile, done) => {
-    // let theUser = getUser(profile.id);
-    // theUser
-    //   .then(data => {
-    //     if (data) {
-    //       return console.log('user found');
-    //     } else {
-    //       return addNewUser(profile.username,profile.displayName, profile.photos[0].value, profile.id)
-    //         .then(userData => {
-    //           return
-    //         })
-    //         .catch(error => {
-    //           return console.log(error.message);
-    //         })
-    //     }
-    //   })
-    //   .catch(error => {
-    //     console.log(error.message);
-    //   })
+    console.log(parseInt(profile.id));
+    let theUser = getUser(profile.id);
+    theUser
+      .then(data => {
+        if (data) {
+          return console.log('user found');
+        } else {
+          return insertUser(profile.id, profile.displayName)
+            .then(userData => {
+              return
+            })
+            .catch(error => {
+              console.log('this is an error here')
+              return console.log(error);
+            })
+        }
+      })
+      .catch(error => {
+        return console.log(error.message);
+      })
     
-      // console.log(theUser);
-      // if (theUser) {
-      //   return console.log(`Found ${profile.username} in database.`)
-      // } else {
-      //   return console.log(`User not found. Adding ${profile.username} to database.`)
-      // }
-    return done(null, profile);
-    // // TODO: replace this with code that finds the user
-    // // in the database.
-    // let theUser = users.find(u => u.id === profile.id);
-    // console.log(user.displayName);
-    // if (theUser) {
-    //   return done(null, user);
-    // } else {
-    //   return done({ message: 'That totally did not work'}, null);
-    // }
+    // return done(null, profile);
 
   }));
 
@@ -76,8 +63,9 @@ const setupAuth = (app) => {
   passport.serializeUser(function(user, done) {
     // placeholder for custom user serialization
     // null is for errors
-    console.log('we are serializing');
-    console.log(user);
+
+    // console.log('we are serializing');
+    // console.log(user);
 
     // This adds the following to the session:
     // {
@@ -95,11 +83,13 @@ const setupAuth = (app) => {
   // This configures how passport checks what's in the
   // session to see if the login is still valid.
   passport.deserializeUser(function(id, done) {
-    console.log('we are deserializing');
+
+    // console.log('we are deserializing');
+    
     // placeholder for custom user deserialization.
     // maybe you are going to get the user from mongo by id?
     // null is for errors
-    console.log(id);
+    // console.log(id);
     done(null, id);
   });
 
@@ -117,7 +107,7 @@ const setupAuth = (app) => {
     console.log('logging out');
     req.logout();
     // res.redirect('/api/login');
-    res.send('logged out')
+    res.send( {loggedIn: false} )
   });
 
   // Our auth route is what Facebook will redirect to after the user logs in

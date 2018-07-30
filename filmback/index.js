@@ -24,7 +24,7 @@ app.get('/api/login', (req, res) => {
     if (req.session && req.session.passport && req.session.passport.user) {
         userID = req.session.passport.user;
     }
-    res.send(req.session)
+    res.send(userID)
 })
 
 app.get('/api/logout', (req, res) => {
