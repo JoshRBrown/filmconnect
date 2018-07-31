@@ -11,7 +11,7 @@ const db = pgp(cn);
 
 
 function insertMovie(id, title, overview, release_date, poster) {
-  return db.one('INSER INTO movies (movied_id, title, overview, release_date, poster) VALUES ($1, $2, $3, $4, $5);', [id, title, overview, release_date, poster]);
+  return db.one('INSERT INTO movies (movie_id, title, overview, release_date, poster) VALUES ($1, $2, $3, $4, $5);', [id, title, overview, release_date, poster]);
 };
 
 function insertUser(id, username) {
@@ -19,7 +19,7 @@ function insertUser(id, username) {
 };
 
 function insertReview(user_id, movie_id, rating, comment) {
-  return db.one('INSERT INTO reviews (user_id, movie_id, rating, comment) VALUES ($1, $2, $3, $4);', [user_id, movie_id, rating, comment]);
+  return db.one('INSERT INTO reviews (user_id, movie_id, rating, comment) VALUES ($1, $2, $3, $4) returning rating;', [user_id, movie_id, rating, comment]);
 };
 
 function getMovieReviews(movie_id) {
