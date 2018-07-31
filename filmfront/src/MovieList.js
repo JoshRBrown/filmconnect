@@ -25,17 +25,17 @@ class MovieList extends React.Component {
     let newArr = this.state.movies.map((movie) => {
       console.log(movie)
     return (<div>
-      <Movie title={movie.title} pic={movie.poster_path} summary={movie.overview} date={movie.release_date} /> 
+      <Movie id={movie.id} title={movie.title} pic={movie.poster_path} summary={movie.overview} date={movie.release_date} /> 
       </div>
       )
     })
-     return newArr
+    return newArr
 }
 
 render() {
   
   return (
-    <div>
+    <div>      
       {this._renderMovies()}
     </div>
   )
