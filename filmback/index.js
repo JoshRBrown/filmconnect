@@ -40,7 +40,7 @@ app.get('/api/reviews/:id', (req, res) => {
     db.getMovieReviews(Number(req.params.id))
         .then((data) => {
             console.log(data);
-            res.send(JSON.stringify(data));
+            res.send((data));
         }).catch(console.log)
 })
 

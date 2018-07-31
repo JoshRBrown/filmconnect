@@ -13,12 +13,11 @@ class ReviewList extends React.Component {
   componentDidMount(){
     fetch(`http://localhost:4000/api/reviews/${this.props.movieId}`)
     //should return an array of reviews associated with above movide id
-    // .then(response => response.json())
-    // .then(data => (data.results))
-    .then(arr => {
-      console.log(arr.json())
-      // this.setState({ 
-      //   reviews: arr })
+    .then(response => response.json())
+    .then(data => {
+      this.setState({
+        reviews: data
+      })
     }).catch(console.log);
   }
 
