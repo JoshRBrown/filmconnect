@@ -45,6 +45,17 @@ app.get('/api/logout', (req, res) => {
     res.send(req.session)
 })
 
+
+app.get('/api/reviews/:id', (req, res) => {
+    console.log(Number(req.params.id))
+    db.getMovieReviews(Number(req.params.id))
+        .then((data) => {
+            console.log(data);
+            res.send((data));
+        }).catch(console.log)
+})
+
+
 app.post('/api/addmovie', (req, res) => {
     let id = req.body.movieId;
     let title = req.body.title;
@@ -55,6 +66,7 @@ app.post('/api/addmovie', (req, res) => {
         .then(data => res.send(data))
         .catch(err => console.log(err.message))
 })
+
 
 app.post('/api/addreview', (req, res) => {
     let user_id = req.body.userId;
