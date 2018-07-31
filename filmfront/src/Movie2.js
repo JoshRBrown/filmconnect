@@ -2,14 +2,12 @@ import React from 'react';
 
 
 class Movie extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+
 
 render(){
   return(
     <div>
-      <img src={`https://image.tmdb.org/t/p/w500${this.props.pic}`}/>
+      <img src={`https://image.tmdb.org/t/p/w500${this.props.pic}`} alt=''/>
     <h1>
     {this.props.title}
     </h1>
