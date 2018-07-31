@@ -33,7 +33,15 @@ class MovieDetail extends React.Component {
         })
         .catch(console.log);
 
-
+        fetch(`http://localhost:4000/api/reviews/${this.state.movieId}`)
+        //should return an array of reviews associated with above movide id
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          this.setState({
+            reviews: data
+          })
+        }).catch(console.log);
         // pull reviews here from DB and set state
         // this.setState({
         //     reviews: [{
@@ -104,7 +112,9 @@ class MovieDetail extends React.Component {
         this.setState({
             reviews: newReviewArray
 
+
         })
+
     }
 
 
@@ -138,7 +148,9 @@ class MovieDetail extends React.Component {
                 />
                 
 
+
                 <ReviewList movieId={this.props.match.params.id}
+
                 reviews={this.state.reviews}/>
 
             

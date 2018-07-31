@@ -10,16 +10,17 @@ class ReviewList extends React.Component {
     }
   }
 
-  componentDidMount(){
-    fetch(`http://localhost:4000/api/reviews/${this.props.movieId}`)
-    //should return an array of reviews associated with above movide id
-    .then(response => response.json())
-    .then(data => {
-      this.setState({
-        reviews: data
-      })
-    }).catch(console.log);
-  }
+  // componentDidMount(){
+    // fetch(`http://localhost:4000/api/reviews/${this.props.movieId}`)
+    // //should return an array of reviews associated with above movide id
+    // .then(response => response.json())
+    // .then(data => {
+    //   console.log(data)
+    //   this.setState({
+    //     reviews: data
+    //   })
+    // }).catch(console.log);
+  // }
 
 
   // Check why this has duplicate key errors from this component...
@@ -28,7 +29,8 @@ class ReviewList extends React.Component {
     let newArr = this.props.reviews.map((review) => {
 
     return (<div>
-      <Review rating={review.rating} comment={review.comment} key={review.userId} userId={review.userId} movieId={review.movieId} /> 
+      {/* user_id and movie_id refernces the database variable names */}
+      <Review rating={review.rating} comment={review.comment} key={review.userId} userId={review.user_id} movieId={review.movie_id} /> 
       </div>
       )
     })
