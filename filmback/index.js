@@ -1,23 +1,26 @@
 
 const dotenv = require('dotenv');
 dotenv.config();
+const apiKey = process.env.API_KEY;
+
 const db = require('./db');
 const express = require('express');
 const app = express();
-const static = express.static;
 const rp = require('request-promise');
-const apiKey = process.env.API_KEY;
 const setupAuth = require('./auth');
 const ensureAuthenticated = require('./auth').ensureAuthenticated;
+const expressHbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const staticMiddleware = express.static('public');
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
+app.engine('.hbs', expressHbs({defaultLayout: 'layout', extname: '.hbs'}));
+app.set('view engine', '.hbs');
 
+const static = express.static;
+app.use(staticMiddleware);
+app.use(bodyParser.urlencoded({ extended: false }))
 setupAuth(app);
+
 
 // This is for cross domain fun
 app.all('*', function(req, res, next) {
@@ -46,7 +49,13 @@ app.all('*', function(req, res, next) {
 // })
 
 //landing page with handlebars or whatever with a login button
-app.get('/', ensureAuthenticated)
+app.get('/', (req, res) => {
+    if (req.session.passport) {
+        res.redirect('http://localhost:3000')
+    } else {
+        res.render('landing')
+    }
+})
 
 app.use(staticMiddleware);
 

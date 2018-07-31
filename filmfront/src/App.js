@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import {Route, Link, Switch} from 'react-router-dom';
-import Signin from './signin';
 import Navbar from './Navbar';
 import MovieList from './MovieList';
 import MyList from './MyList';
