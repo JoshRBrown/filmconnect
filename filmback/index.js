@@ -29,13 +29,13 @@ app.all('*', function(req, res, next) {
     next();
 });
 
-app.get('/api/login', (req, res) => {
-    let userID = 0;
-    if (req.session && req.session.passport && req.session.passport.user) {
-        userID = req.session.passport.user;
-    }
-    res.send(userID)
-})
+// app.get('/api/login', (req, res) => {
+//     let userID = 0;
+//     if (req.session && req.session.passport && req.session.passport.user) {
+//         userID = req.session.passport.user;
+//     }
+//     res.send(userID)
+// })
 
 app.get('/api/logout', (req, res) => {
     let userID = 0;

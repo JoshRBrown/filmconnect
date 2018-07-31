@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import {Route, Link} from 'react-router-dom';
-import Signin from './signin';
+import Signin from './Signin';
 import Navbar from './Navbar';
 import MovieList from './MovieList';
 import MyList from './MyList';
@@ -25,7 +25,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Signin />
+        {/* <Signin /> */}
         <Navbar />
         
         <Route path='/search' component={Search} exact={true} />
