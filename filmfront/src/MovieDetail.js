@@ -8,10 +8,15 @@ class MovieDetail extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            movieDetail: {}
+            movieDetail: {},
+            reviews: [{
+                rating: 9,
+                comment: 'I enjoyed this film....',
+                userId: 5,
+                movieId: this.props.match.params.id
+            }]
         }
     }
-
     
     componentDidMount() {
         let movieDetailUrl = `https://api.themoviedb.org/3/movie/${this.props.match.params.id}?api_key=a52e05e82970ac75c588634e53f1caa4`;
@@ -19,11 +24,28 @@ class MovieDetail extends React.Component {
         .then(response => response.json())
         .then(data => {
             this.setState({ 
-                movieDetail: data 
+                movieDetail: data,
             })
-            console.log(this.state.movieDetail)
+            // console.log(this.state.movieDetail)
         })
         .catch(console.log);
+
+        // pull reviews here from DB and set state
+        // this.setState({
+        //     reviews: [{
+        //             rating: 9,
+        //             comment: 'I enjoyed this film....',
+        //             userId: 5,
+        //             movieId: this.props.match.params.id
+        //         },
+        //         {
+        //             rating: 5,
+        //             comment: 'Needs improvement..',
+        //             userId: 1,
+        //             movieId: this.props.match.params.id
+        //         }
+        //     ]}
+        // )
     }
 
     _renderMovieDetail = () => {
@@ -50,13 +72,50 @@ class MovieDetail extends React.Component {
         )
     }
 
+    _submitReview = (rating, comment, userId, movieId, e) => {
+        
+        e.preventDefault();
+        let reviewObject = {
+            rating,
+            comment,
+            userId,
+            movieId
+        };
+        // make put call to API backend DB....
+        this._insertReviewIntoDatabase(reviewObject);
+
+        console.log(reviewObject);
+        let newReviewArray = this.state.reviews.slice();
+        newReviewArray.unshift(reviewObject);
+        this.setState({
+            reviews: newReviewArray
+        })
+        console.log(this.state.reviews);
+        
+    }
+
+    _insertReviewIntoDatabase = (reviewObject) => {
+        fetch('http://localhost:4000/api/addreview', {
+            method: 'post',
+            body: JSON.stringify(reviewObject)
+        }).then((response) => {
+            return response.json();
+        }
+        ).then((data) => {
+            alert('Review Submitted');
+        }
+        )}
+
     render () {
 
         return (
             <div>
                 {this._renderMovie()}
-                <AddReview />
-                <ReviewList movieId={this.props.match.params.id} />
+                <AddReview submit={this._submitReview}
+                />
+                
+                <ReviewList movieId={this.props.match.params.id} 
+                reviews={this.state.reviews} />
             
             </div>
         );
