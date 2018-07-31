@@ -6,7 +6,7 @@ class ReviewList extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      reviews: []
+      reviews: this.props.reviews
     }
   }
 
@@ -25,7 +25,7 @@ class ReviewList extends React.Component {
   // Check why this has duplicate key errors from this component...
   _renderReviews = () => {
 
-    let newArr = this.state.reviews.map((review) => {
+    let newArr = this.props.reviews.map((review) => {
 
     return (<div>
       <Review rating={review.rating} comment={review.comment} key={review.userId} userId={review.userId} movieId={review.movieId} /> 

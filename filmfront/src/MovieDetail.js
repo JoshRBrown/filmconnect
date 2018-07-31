@@ -104,7 +104,9 @@ class MovieDetail extends React.Component {
         this.setState({
             reviews: newReviewArray
 
+        })
     }
+
 
     _insertReviewIntoDatabase = (reviewObject) => {
         axios.post('http://localhost:4000/api/addreview', 
@@ -136,7 +138,8 @@ class MovieDetail extends React.Component {
                 />
                 
 
-                <ReviewList movieId={this.props.match.params.id} />
+                <ReviewList movieId={this.props.match.params.id}
+                reviews={this.state.reviews}/>
 
             
             </div>

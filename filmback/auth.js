@@ -36,11 +36,11 @@ const setupAuth = (app) => {
     theUser
       .then(data => {
         if (data) {
-          return console.log('user found');
+          return done(null, profile)
         } else {
           return insertUser(profile.id, profile.displayName)
             .then(userData => {
-              return
+              return done(null, profile)
             })
             .catch(error => {
               console.log('this is an error here')
@@ -101,13 +101,13 @@ const setupAuth = (app) => {
   app.use(passport.session());
 
   // #8 register our login, logout, and auth routes
-  app.get('/api/login', passport.authenticate('facebook'));
+  app.get('/login', passport.authenticate('facebook'));
 
-  app.get('/api/logout', function(req, res, next) {
+  app.get('/logout', function(req, res, next) {
     console.log('logging out');
     req.logout();
-    // res.redirect('/api/login');
-    res.send( {loggedIn: false} )
+    res.redirect('/');
+    // res.send( {loggedIn: false} )
   });
 
   // Our auth route is what Facebook will redirect to after the user logs in
@@ -126,8 +126,9 @@ const setupAuth = (app) => {
       req.session.save(() => {
         // make sure the session is saved
         // before we send them to the homepage!
-        // res.redirect('/');
-        res.send(req.session.passport.user);
+        // res.redirect('http://localhost:3000/' + req.session.passport.user);
+        res.redirect('http://localhost:3000');
+        // res.send(req.session.passport.user);
       });
     }
   );
@@ -151,8 +152,8 @@ const ensureAuthenticated = (req, res, next) => {
 
     console.log('clearly, they are not authenticated');
     // denied. redirect to login
-    // res.redirect('/');
-    res.send('user not authenticated');
+    res.redirect('/login');
+    // res.send('user not authenticated');
 }
 
 // Our default export is the `setupAuth` function.
