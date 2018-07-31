@@ -2,15 +2,18 @@ import React from 'react';
 import Movie2 from './Movie2';
 import ReviewList from './ReviewList';
 import AddReview from './AddReview';
+import axios from 'axios';
 
 class MovieDetail extends React.Component {
     
     constructor(props) {
         super(props)
         this.state = {
+            userId: 1,
+            movieId: this.props.match.params.id,
             movieDetail: {},
             reviews: [{
-                rating: 9,
+                rating: 5,
                 comment: 'I enjoyed this film....',
                 userId: 5,
                 movieId: this.props.match.params.id
@@ -72,50 +75,67 @@ class MovieDetail extends React.Component {
         )
     }
 
-    _submitReview = (rating, comment, userId, movieId, e) => {
+    _submitReview = (rating, comment, e) => {
         
         e.preventDefault();
         let reviewObject = {
             rating,
             comment,
-            userId,
-            movieId
+            userId: this.state.userId,
+            movieId: this.state.movieId
         };
+
+        let movieObject = {
+            movieId: this.state.movieId,
+            title: this.state.movieDetail.original_title,
+            overview: this.state.movieDetail.overview,
+            releaseDate: this.state.movieDetail.release_date,
+            poster: this.state.movieDetail.poster_path
+        }
+        console.log(movieObject, reviewObject);
+        this._insertMovieIntoDatabase(movieObject);
         // make put call to API backend DB....
         this._insertReviewIntoDatabase(reviewObject);
 
-        console.log(reviewObject);
         let newReviewArray = this.state.reviews.slice();
         newReviewArray.unshift(reviewObject);
         this.setState({
             reviews: newReviewArray
-        })
-        console.log(this.state.reviews);
-        
+        })        
     }
 
     _insertReviewIntoDatabase = (reviewObject) => {
-        fetch('http://localhost:4000/api/addreview', {
-            method: 'post',
-            body: JSON.stringify(reviewObject)
-        }).then((response) => {
-            return response.json();
-        }
-        ).then((data) => {
+        axios.post('http://localhost:4000/api/addreview', 
+            reviewObject
+        )
+        // .then((response) => {
+        //     return response.json()
+        // })
+        .then((data) => {
             alert('Review Submitted');
         }
         )}
+
+    _insertMovieIntoDatabase = (movieObject) => {
+        axios.post('http://localhost:4000/api/addmovie',
+                movieObject
+            )
+            .then((data) => {
+            })
+        }
+    
 
     render () {
 
         return (
             <div>
                 {this._renderMovie()}
-                <AddReview submit={this._submitReview}
+                <AddReview submit={this._submitReview} 
                 />
                 
                 <ReviewList movieId={this.props.match.params.id} 
-                reviews={this.state.reviews} />
+                reviews={this.state.reviews}
+                />
             
             </div>
         );

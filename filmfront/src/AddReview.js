@@ -6,8 +6,6 @@ class AddReview extends React.Component {
     this.state = { 
       rating: 3,
       comment: '',
-      userId: 1,
-      movieId: 2
   }
 }
 
@@ -36,8 +34,6 @@ class AddReview extends React.Component {
         onSubmit={(e) => this.props.submit(
           this.state.rating, 
           this.state.comment, 
-          this.state.userId, 
-          this.state.movieId,
           e
           )}>
           Rating:  
