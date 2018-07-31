@@ -11,7 +11,7 @@ const db = pgp(cn);
 
 
 function insertMovie(id, title, overview, release_date, poster) {
-  return db.one('INSER INTO movies (movied_id, title, overview, release_date, poster) VALUES ($1, $2, $3, $4, $5);', [id, title, overview, release_date, poster]);
+  return db.one('INSERT INTO movies (movied_id, title, overview, release_date, poster) VALUES ($1, $2, $3, $4, $5);', [id, title, overview, release_date, poster]);
 };
 
 function insertUser(id, username) {

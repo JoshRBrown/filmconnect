@@ -35,6 +35,15 @@ app.get('/api/logout', (req, res) => {
     res.send(req.session)
 })
 
+app.get('/api/reviews/:id', (req, res) => {
+    console.log(Number(req.params.id))
+    db.getMovieReviews(Number(req.params.id))
+        .then((data) => {
+            console.log(data);
+            res.send(JSON.stringify(data));
+        }).catch(console.log)
+})
+
 
 
 

@@ -30,6 +30,7 @@ class MovieDetail extends React.Component {
         })
         .catch(console.log);
 
+
         // pull reviews here from DB and set state
         // this.setState({
         //     reviews: [{
@@ -84,13 +85,13 @@ class MovieDetail extends React.Component {
         // make put call to API backend DB....
         this._insertReviewIntoDatabase(reviewObject);
 
-        console.log(reviewObject);
+        // console.log(reviewObject);
         let newReviewArray = this.state.reviews.slice();
         newReviewArray.unshift(reviewObject);
         this.setState({
             reviews: newReviewArray
         })
-        console.log(this.state.reviews);
+        // console.log(this.state.reviews);
         
     }
 
@@ -114,8 +115,7 @@ class MovieDetail extends React.Component {
                 <AddReview submit={this._submitReview}
                 />
                 
-                <ReviewList movieId={this.props.match.params.id} 
-                reviews={this.state.reviews} />
+                <ReviewList movieId={this.props.match.params.id} />
             
             </div>
         );
