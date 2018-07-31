@@ -3,13 +3,10 @@ import Review from './Review'
 import Movie from './Movie2';
 
 class ReviewList extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { reviews: [
-      { rating: 9, comment: 'I enjoyed this film....', userId: 5, movieId: this.props.movieId},
-      { rating: 5, comment: 'Needs improvement..', userId: 1, movieId: this.props.movieId}
-    ]}
-  }
+  // constructor(props) {
+  //   super(props)
+    
+  // }
 
   // componentDidMount(){
   //   fetch(`http://localhost:4000/api/reviews/${this.props.match.params.id}`)
@@ -26,7 +23,8 @@ class ReviewList extends React.Component {
 
   // Check why this has duplicate key errors from this component...
   _renderReviews = () => {
-    let newArr = this.state.reviews.map((review) => {
+    console.log(this.props.reviews);
+    let newArr = this.props.reviews.map((review) => {
     return (<div>
       <Review rating={review.rating} comment={review.comment} key={review.userId} userId={review.userId} movieId={review.movieId} /> 
       </div>
