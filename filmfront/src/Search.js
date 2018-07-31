@@ -9,14 +9,14 @@ class Search extends React.Component {
     }
   }
 
-  componentDidMount(){
-    console.log(this.props.searchString);
-    console.log('Fetching data now');
-    fetch(`https://api.themoviedb.org/3/search/movie?api_key=644f21e59b17cbf67e64dbcba7a57278&language=en-US&query=${this.props.searchString}&page=1&include_adult=false`)
+  componentDidMount() {
+    // console.log(this.props.searchString);
+    // console.log('Fetching data now');
+    fetch(`https://api.themoviedb.org/3/search/movie?api_key=644f21e59b17cbf67e64dbcba7a57278&language=en-US&query=${this.props.match.params.searchstring}&page=1&include_adult=false`)
       .then(response => response.json())
       .then(data => (data.results))
       .then(arr => {
-        console.log(arr)
+        // console.log(arr)
         this.setState({
           movies: arr
         })
@@ -46,7 +46,7 @@ class Search extends React.Component {
 
   _renderMovies = () => {
     let newArr = this.state.movies.map((movie) => {
-    return (<div>
+    return (<div key={movie.id}>
       <Movie id={movie.id} title={movie.title} pic={movie.poster_path} summary={movie.overview} date={movie.release_date} /> 
       </div>
       )

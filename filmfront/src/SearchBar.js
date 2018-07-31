@@ -1,23 +1,36 @@
 import React from 'react';
 import Movie from './Movie';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+
 
 class Search extends React.Component {
+  constructor(props) {
+    super(props)
 
-  _submitSearch = (e) => {
-    e.preventDefault();
-    console.log('hello');
-    <Link to='/search'>Search</Link>
-  };
+  }
+
+  componentDidMount() {
+    this.setState({
+      searchText: ''
+    })
+  }
+
+  _handleChange = (e) => {
+    this.setState({
+      searchText: e.target.value
+    })
+  }
 
   render() {
     return (
       <div>
-        <form onSubmit={e => this._submitSearch}>
-        <input type="text" placeholder='Search for movie' onChange={this.props.onChange}/>
-        {/* <Link to='/search'> */}
-          <input type="submit"/>
-        {/* </Link> */}
+        <form onSubmit={e => {
+          this.props.searchSubmit(this.state.searchText);
+          e.preventDefault();
+          this.props.history.push('/search/' + this.state.searchText);
+        }}>
+        <input type="text" placeholder='Search for movie' onChange={this._handleChange}/>
+        <input type="submit"/>
 
         </form>
       </div>
@@ -25,4 +38,4 @@ class Search extends React.Component {
   };
 };
 
-export default Search;
+export default withRouter(Search);
