@@ -10,7 +10,6 @@ const Navbar = (props) => {
         <ul>
           <li><Link to='/browse'>Browse Movies</Link></li>
           <li><Link to='/mymovies'>My Movie</Link></li>
-          {/* <li><Link to='/search'>Search</Link></li> */}
         </ul>
       </div>
   )
