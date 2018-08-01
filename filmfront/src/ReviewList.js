@@ -40,7 +40,7 @@ class ReviewList extends React.Component {
 render() {
   
   return (
-    <div>      
+    <div className="detailed-review-container">      
       {this._renderReviews()}
     </div>
   )
