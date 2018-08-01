@@ -9,7 +9,7 @@ class MovieDetail extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            userId: this.props.userID,
+            userId: 5,
             movieId: this.props.match.params.id,
             movieDetail: {},
             reviews: [{
@@ -117,8 +117,17 @@ class MovieDetail extends React.Component {
 
     }
 
+    _insertMovieIntoDatabase = (movieObject) => {
+        console.log(movieObject);
+        axios.post('http://localhost:4000/api/addmovie',
+                movieObject
+            )
+            .then((data) => {
+            })
+        }
 
     _insertReviewIntoDatabase = (reviewObject) => {
+        console.log(reviewObject);
         axios.post('http://localhost:4000/api/addreview', 
             reviewObject
         )
@@ -130,13 +139,6 @@ class MovieDetail extends React.Component {
         }
         )}
 
-    _insertMovieIntoDatabase = (movieObject) => {
-        axios.post('http://localhost:4000/api/addmovie',
-                movieObject
-            )
-            .then((data) => {
-            })
-        }
     
 
     render () {

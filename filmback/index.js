@@ -18,6 +18,7 @@ app.set('view engine', '.hbs');
 
 const static = express.static;
 app.use(staticMiddleware);
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 setupAuth(app);
 
@@ -51,7 +52,7 @@ app.all('*', function(req, res, next) {
 //landing page with handlebars or whatever with a login button
 app.get('/', (req, res) => {
     if (req.session.passport) {
-        res.redirect('http://localhost:3000')
+        res.redirect('http://localhost:4000/browse')
     } else {
         res.render('landing')
     }
@@ -59,9 +60,9 @@ app.get('/', (req, res) => {
 
 app.use(staticMiddleware);
 
-app.get('/whoami', (req,res) => {
+app.get('/whoami', ensureAuthenticated, (req,res) => {
     console.log(req.session.passport.user);
-    res.send(req.session.passport.user);
+    res.send(JSON.stringify(req.session.passport.user));
 })
 
 app.get('/api/reviews/:id', (req, res) => {
@@ -80,6 +81,7 @@ app.post('/api/addmovie', (req, res) => {
     let overview = req.body.overview;
     let releaseDate = req.body.releaseDate;
     let poster = req.body.poster;
+    console.log(req)
     db.insertMovie(id, title, overview, releaseDate,poster)
         .then(data => res.send(data))
         .catch(err => console.log(err.message))

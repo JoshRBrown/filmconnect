@@ -127,7 +127,7 @@ const setupAuth = (app) => {
         // make sure the session is saved
         // before we send them to the homepage!
         // res.redirect('http://localhost:3000/' + req.session.passport.user);
-        res.redirect('http://localhost:3000');
+        res.redirect('http://localhost:4000/browse');
         // res.send(req.session.passport.user);
       });
     }
