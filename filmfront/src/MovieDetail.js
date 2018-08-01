@@ -84,8 +84,8 @@ class MovieDetail extends React.Component {
         let reviewObject = {
             rating,
             comment,
-            userId: this.state.userId,
-            movieId: this.state.movieId
+            user_id: this.state.userId,
+            movie_id: this.state.movieId
         };
 
         let movieObject = {
@@ -103,6 +103,7 @@ class MovieDetail extends React.Component {
 
         let newReviewArray = this.state.reviews.slice();
         newReviewArray.unshift(reviewObject);
+        console.log('test',newReviewArray);
         this.setState({
             reviews: newReviewArray
         })
