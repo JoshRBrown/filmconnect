@@ -46,8 +46,10 @@ class Search extends React.Component {
 
   _renderMovies = () => {
     let newArr = this.state.movies.map((movie) => {
-    return (<div key={movie.id}>
+    return (<div className="movie-list-movie-holder">
+    <div className="movie-list-movie" key={movie.id}>
       <Movie id={movie.id} title={movie.title} pic={movie.poster_path} summary={movie.overview} date={movie.release_date} userId={this.props.userId} /> 
+      </div>
       </div>
       )
     })
@@ -57,7 +59,7 @@ class Search extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="movie-list-container">
         {/* <form onSubmit={this._submitSearch}>
         <input type="text" placeholder='Search for movie' onChange={this._updateChange}/>
         <input type="submit"/>
