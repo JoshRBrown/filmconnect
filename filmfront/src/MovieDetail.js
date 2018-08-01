@@ -165,13 +165,18 @@ class MovieDetail extends React.Component {
     render () {
 
         return (
-            <div>
-                {this._renderMovie()}
-                <AddReview submit={this._submitReview} 
-                />
-                
-                <ReviewList movieId={this.props.match.params.id}
-                reviews={this.state.reviews}/>
+            <div className="detailed-movie">
+                <div className=".detailed-movie-poster">
+                    {this._renderMovie()}
+                </div>
+                <div className="detailed-movie-text">
+                    <ReviewList movieId={this.props.match.params.id}
+                    reviews={this.state.reviews}/>
+            
+            
+                    <AddReview submit={this._submitReview} 
+                    />                
+                </div>
             </div>
         );
     }
