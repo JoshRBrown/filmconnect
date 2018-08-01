@@ -16,19 +16,15 @@ class App extends Component {
       searchVal: ' '
     }
   }
-
-  // _searchText = (val) => {
-  //     this.setState({
-  //       searchString: val 
-  //     })
-  //   }
   
-  _updateChange = (e) => {
-    e.preventDefault();
+  _searchSubmit = (val) => {
     this.setState({
-      searchVal: e.target.value
+      searchVal: val
+    }, () => {
+      // console.log(this.state.searchVal);
     })
-  };
+    // console.log(this.state.searchVal);
+  }
 
   _getUserId = () => {
     fetch('http://localhost:4000/whoami')
@@ -44,13 +40,12 @@ class App extends Component {
       <div>
         {/* <Signin /> */}
         <Navbar />
-        <SearchBar onChange={this._updateChange} />
+        <SearchBar searchSubmit={this._searchSubmit} />
         
-        <Route path='/search' exact={true} 
-        render={(props) => 
-        <Search {...props} searchString={this.state.searchVal} /> 
-        } 
-        /> 
+        <Route path='/search/:searchstring' 
+        render={(props) => {
+          return <Search {...props} key={this.state.searchVal} /> 
+        }}/> 
         <Route path='/browse' component={MovieList} exact={true} />
         <Route path='/mymovies'  exact={true} render={(props) =>
         <MyList {...props} userID={this._getUserId()} />}/>

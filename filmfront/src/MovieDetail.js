@@ -37,10 +37,10 @@ class MovieDetail extends React.Component {
         //should return an array of reviews associated with above movide id
         .then(response => response.json())
         .then(data => {
-          console.log(data)
-          this.setState({
+            console.log(data)
+            this.setState({
             reviews: data
-          })
+        })
         }).catch(console.log);
         // pull reviews here from DB and set state
         // this.setState({
