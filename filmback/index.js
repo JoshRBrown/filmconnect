@@ -109,10 +109,10 @@ app.get('/api/myreviews', (req, res) => {
 app.post('/api/addreview', (req, res) => {
     console.log('review.. req', req.body)
 
-    let user_id = req.body.userId.toString();
+    let user_id = req.body.user_id.toString();
     console.log(user_id);
     console.log(typeof(user_id));
-    let movie_id = req.body.movieId;
+    let movie_id = req.body.movie_id;
     let rating = req.body.rating;
     let comment = req.body.comment;
     // console.log(req);

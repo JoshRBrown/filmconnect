@@ -1,0 +1,16 @@
+body, html {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-image: url('https://www.reviewjournal.com/wp-content/uploads/2015/01/web1_real-mil-mcdonald-theater5.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+}
+
+button {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+}
