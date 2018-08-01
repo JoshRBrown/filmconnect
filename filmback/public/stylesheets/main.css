@@ -7,10 +7,14 @@
 }
 
 .detailed-movie-poster {
-  height: 70%;
+  height: 500px;
   width: auto;
   display: flex;
   flex-direction: column;
+}
+.img-div img {
+  height: 300px;
+  width: auto;
 }
 
 .detailed-movie-poster h1, .detailed-movie-poster p {
