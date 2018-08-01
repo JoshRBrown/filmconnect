@@ -60,6 +60,7 @@ app.get('/', (req, res) => {
 app.use(staticMiddleware);
 
 app.get('/whoami', (req,res) => {
+    console.log(req.session.passport.user);
     res.send(req.session.passport.user);
 })
 
@@ -84,6 +85,9 @@ app.post('/api/addmovie', (req, res) => {
         .catch(err => console.log(err.message))
 })
 
+app.get('/api/myreviews', (req, res) => {
+    console.log(req)
+})
 
 app.post('/api/addreview', (req, res) => {
     let user_id = req.body.userId;

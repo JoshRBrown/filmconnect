@@ -30,6 +30,14 @@ class App extends Component {
     })
   };
 
+  _getUserId = () => {
+    fetch('http://localhost:4000/whoami')
+      .then((res) => res)
+      .then(data => {
+        console.log(data)
+      })
+  };
+
 
   render() {
     return (
@@ -44,8 +52,10 @@ class App extends Component {
         } 
         /> 
         <Route path='/browse' component={MovieList} exact={true} />
-        <Route path='/mymovies' component={MyList} exact={true} />
-        <Route path='/browse/:id' component={MovieDetail} exact={true} />
+        <Route path='/mymovies'  exact={true} render={(props) =>
+        <MyList {...props} userID={this._getUserId()} />}/>
+        <Route path='/browse/:id' exact={true} render={(props) => 
+        <MovieDetail {...props} userID={this._getUserId()} />}/>
 
       </div>
     );
