@@ -1,17 +1,21 @@
 
-body, html {
-  height: 100%;
+.detailed-movie { 
+  display: flex;
+  flex-direction: row;
+  height: 500px;
   width: 100%;
-  position: absolute;
-  background-image: url('https://www.reviewjournal.com/wp-content/uploads/2015/01/web1_real-mil-mcdonald-theater5.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
-.page-picture {
-  height: auto;
+.detailed-movie-poster {
+  height: 100%;
   width: auto;
-  opacity: .7;
-  background-color: lightgray;
 }
+
+.detailed-movie-text { 
+  height: 50%;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+

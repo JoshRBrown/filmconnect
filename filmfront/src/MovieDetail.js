@@ -109,6 +109,14 @@ class MovieDetail extends React.Component {
 
     }
 
+    _insertMovieIntoDatabase = (movieObject) => {
+        console.log(movieObject);
+        axios.post('http://localhost:4000/api/addmovie',
+                movieObject
+            )
+            .then((data) => {
+            })
+        }
 
     _insertReviewIntoDatabase = (reviewObject) => {
         console.log(reviewObject);

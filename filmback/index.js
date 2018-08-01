@@ -96,6 +96,7 @@ app.post('/api/addmovie', (req, res) => {
     let overview = req.body.overview;
     let releaseDate = req.body.releaseDate;
     let poster = req.body.poster;
+    console.log(req)
     db.insertMovie(id, title, overview, releaseDate,poster)
         .then(data => res.send(data))
         .catch(err => console.log(err.message))
