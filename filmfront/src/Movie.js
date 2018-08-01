@@ -10,15 +10,15 @@ render(){
   return(
     <Link to={`/browse/${this.props.id}`}>
     <div className='movie-poster'>
-      <img src={`https://image.tmdb.org/t/p/w500${this.props.pic}`}/>
+      <img className="movie-list-movie-image" src={`https://image.tmdb.org/t/p/w500${this.props.pic}`}/>
       <h1>
-      {this.props.title}
+      {/* {this.props.title} */}
       </h1>
       <p>
-      {this.props.summary}
+      {/* {this.props.summary} */}
       </p>
       <p>
-      Release date: {this.props.date}
+      {/* Release date: {this.props.date} */}
       </p>
     </div>
   </Link>
