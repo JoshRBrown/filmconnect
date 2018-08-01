@@ -28,7 +28,7 @@ class ReviewList extends React.Component {
 
     let newArr = this.props.reviews.map((review) => {
 
-    return (<div>
+    return (<div key={review.userId}>
       {/* user_id and movie_id refernces the database variable names */}
       <Review rating={review.rating} comment={review.comment} key={review.userId} userId={review.user_id} movieId={review.movie_id} /> 
       </div>

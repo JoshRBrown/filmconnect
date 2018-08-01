@@ -47,7 +47,7 @@ class Search extends React.Component {
   _renderMovies = () => {
     let newArr = this.state.movies.map((movie) => {
     return (<div key={movie.id}>
-      <Movie id={movie.id} title={movie.title} pic={movie.poster_path} summary={movie.overview} date={movie.release_date} /> 
+      <Movie id={movie.id} title={movie.title} pic={movie.poster_path} summary={movie.overview} date={movie.release_date} userId={this.props.userId} /> 
       </div>
       )
     })

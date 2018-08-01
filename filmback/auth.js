@@ -22,7 +22,8 @@ const setupAuth = (app) => {
     secret: 'whatever',
     resave: true,
     saveUninitialized: true,
-    store: new FileStore()
+    store: new FileStore(),
+    unset: 'destroy'
   }));
 
   // #3 set up passport strategy
@@ -127,7 +128,7 @@ const setupAuth = (app) => {
         // make sure the session is saved
         // before we send them to the homepage!
         // res.redirect('http://localhost:3000/' + req.session.passport.user);
-        res.redirect('http://localhost:3000');
+        res.redirect('http://localhost:4000');
         // res.send(req.session.passport.user);
       });
     }
