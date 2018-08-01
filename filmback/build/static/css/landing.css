@@ -16,8 +16,16 @@ body, html {
 
 .page-picture {
   position: absolute;
-  height: 100%;
+  height: 60%;
   top: 50%;
   left: 43%;
   /* background-color: lightgray; */
+}
+  
+.detailed-review-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  height: 40%;
 }
