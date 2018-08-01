@@ -9,15 +9,10 @@ class MovieDetail extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            userId: 5,
+            userId: this.props.userId,
             movieId: this.props.match.params.id,
             movieDetail: {},
-            reviews: [{
-                rating: 5,
-                comment: 'I enjoyed this film....',
-                userId: 5,
-                movieId: this.props.match.params.id
-            }]
+            reviews: []
         }
     }
     
@@ -33,7 +28,7 @@ class MovieDetail extends React.Component {
         })
         .catch(console.log);
 
-        fetch(`http://localhost:4000/api/reviews/${this.state.movieId}`)
+        fetch(`/api/reviews/${this.state.movieId}`)
         //should return an array of reviews associated with above movide id
         .then(response => response.json())
         .then(data => {
@@ -43,21 +38,19 @@ class MovieDetail extends React.Component {
         })
         }).catch(console.log);
         // pull reviews here from DB and set state
-        // this.setState({
-        //     reviews: [{
-        //             rating: 9,
-        //             comment: 'I enjoyed this film....',
-        //             userId: 5,
-        //             movieId: this.props.match.params.id
-        //         },
-        //         {
-        //             rating: 5,
-        //             comment: 'Needs improvement..',
-        //             userId: 1,
-        //             movieId: this.props.match.params.id
-        //         }
-        //     ]}
-        // )
+        this._getUserId();
+        
+    }
+
+    _getUserId = () => {
+        axios.get('/whoami')
+            .then(response => response.data)
+            .then(data => {
+                this.setState({
+                    userId: data
+                })
+            })
+            .catch(console.log)
     }
 
     _renderMovieDetail = () => {
@@ -87,6 +80,7 @@ class MovieDetail extends React.Component {
     _submitReview = (rating, comment, e) => {
         
         e.preventDefault();
+        console.log(this.state.userId, this.state.movieId);
         let reviewObject = {
             rating,
             comment,
@@ -111,8 +105,6 @@ class MovieDetail extends React.Component {
         newReviewArray.unshift(reviewObject);
         this.setState({
             reviews: newReviewArray
-
-
         })
 
     }
@@ -128,7 +120,17 @@ class MovieDetail extends React.Component {
 
     _insertReviewIntoDatabase = (reviewObject) => {
         console.log(reviewObject);
-        axios.post('http://localhost:4000/api/addreview', 
+
+        // fetch('/api/addreview', {
+        //         method: 'POST', // or 'PUT'
+        //         body: JSON.stringify(reviewObject), // data can be `string` or {object}!
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         }
+        //     }).then(res => res.json())
+        //     .catch(error => console.error('Error:', error))
+        //     .then(response => console.log('Success:', response));
+        axios.post('/api/addreview',
             reviewObject
         )
         // .then((response) => {
@@ -137,8 +139,27 @@ class MovieDetail extends React.Component {
         .then((data) => {
             alert('Review Submitted');
         }
-        )}
+        )
+    }
 
+    _insertMovieIntoDatabase = (movieObject) => {
+
+        // fetch('/api/addmovie', {
+        //         method: 'POST', // or 'PUT'
+        //         body: JSON.stringify(movieObject), // data can be `string` or {object}!
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         }
+        //     }).then(res => res.json())
+        //     .catch(error => console.error('Error:', error))
+        //     .then(response => console.log('Success:', response));
+
+        axios.post('/api/addmovie',
+                movieObject
+            )
+            .then((data) => {
+            })
+        }
     
 
     render () {
@@ -149,13 +170,8 @@ class MovieDetail extends React.Component {
                 <AddReview submit={this._submitReview} 
                 />
                 
-
-
                 <ReviewList movieId={this.props.match.params.id}
-
                 reviews={this.state.reviews}/>
-
-            
             </div>
         );
     }

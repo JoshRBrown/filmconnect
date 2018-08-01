@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {Link} from 'react-router-dom';
 
 class Movie extends React.Component {
   constructor(props) {
@@ -8,7 +8,7 @@ class Movie extends React.Component {
 
 render(){
   return(
-    <a href={`/browse/${this.props.id}`}>
+    <Link to={`/browse/${this.props.id}`}>
     <div className='movie-poster'>
       <img src={`https://image.tmdb.org/t/p/w500${this.props.pic}`}/>
       <h1>
@@ -21,7 +21,7 @@ render(){
       Release date: {this.props.date}
       </p>
     </div>
-  </a>
+  </Link>
   )
 }
 

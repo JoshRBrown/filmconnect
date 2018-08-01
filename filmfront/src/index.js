@@ -6,4 +6,5 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(<Router><App /></Router>, document.getElementById('root'));
+// commented this out to reduce React caching
 // registerServiceWorker();

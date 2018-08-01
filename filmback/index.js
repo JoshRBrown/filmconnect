@@ -11,15 +11,16 @@ const setupAuth = require('./auth');
 const ensureAuthenticated = require('./auth').ensureAuthenticated;
 const expressHbs = require('express-handlebars');
 const bodyParser = require('body-parser');
-const staticMiddleware = express.static('public');
+const staticMiddleware = express.static('build');
+const cors = require('cors');
 
 app.engine('.hbs', expressHbs({defaultLayout: 'layout', extname: '.hbs'}));
 app.set('view engine', '.hbs');
 
 const static = express.static;
-app.use(staticMiddleware);
+
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 setupAuth(app);
 
 
@@ -31,6 +32,12 @@ app.all('*', function(req, res, next) {
 
     next();
 });
+
+app.use(cors({
+    origin: ['*'],
+    methods: ['GET', 'POST'],
+    credentials: true
+}));
 
 // app.get('/login', (req, res) => {
 //     //send them page with a button to do authentication
@@ -50,32 +57,40 @@ app.all('*', function(req, res, next) {
 // })
 
 //landing page with handlebars or whatever with a login button
-app.get('/', (req, res) => {
-    if (req.session.passport) {
-        res.redirect('http://localhost:4000/browse')
+app.get('/', (req, res, next)  => {
+    if (req.session.passport && req.session.passport.user) {
+        console.log('logged in');
+        console.log(req.session.passport.user);
+        next();
     } else {
+        console.log('landing page');
         res.render('landing')
     }
 })
 
-app.use(staticMiddleware);
 
-app.get('/whoami', ensureAuthenticated, (req,res) => {
-    console.log(req.session.passport.user);
-    res.send(JSON.stringify(req.session.passport.user));
+app.get('/whoami', (req,res) => {
+    if (req.session.passport && req.session.passport.user) {
+        console.log(req.session.passport.user);
+        res.send(req.session.passport.user);
+    } else {
+        // res.send('0');
+        res.redirect('http://localhost:4000');
+    }
 })
 
 app.get('/api/reviews/:id', (req, res) => {
-    console.log(Number(req.params.id))
+    // console.log(Number(req.params.id))
     db.getMovieReviews(Number(req.params.id))
         .then((data) => {
-            console.log(data);
+            // console.log(data);
             res.send((data));
         }).catch(console.log)
 })
 
 
 app.post('/api/addmovie', (req, res) => {
+    // console.log('movie.. req', req.body)
     let id = req.body.movieId;
     let title = req.body.title;
     let overview = req.body.overview;
@@ -92,14 +107,21 @@ app.get('/api/myreviews', (req, res) => {
 })
 
 app.post('/api/addreview', (req, res) => {
-    let user_id = req.body.userId;
+    console.log('review.. req', req.body)
+
+    let user_id = req.body.userId.toString();
+    console.log(user_id);
+    console.log(typeof(user_id));
     let movie_id = req.body.movieId;
     let rating = req.body.rating;
     let comment = req.body.comment;
+    // console.log(req);
     db.insertReview(user_id, movie_id, rating, comment)
         .then(data => res.send(data))
         .catch(err => console.log(err.message))
 })
+
+app.use(staticMiddleware);
 
 
 //server initialization
