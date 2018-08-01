@@ -1,0 +1,23 @@
+
+body, html {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-image: ;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.page-picture {
+  opacity: .7;
+  text-align: center;
+}
+
+.page-picture {
+  position: absolute;
+  height: 100%;
+  top: 50%;
+  left: 43%;
+  /* background-color: lightgray; */
+}
