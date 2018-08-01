@@ -10,7 +10,7 @@ const Navbar = (props) => {
       <Signin />
         <ul>
           <li><Link to='/browse'>Browse Movies</Link></li>
-          <li><Link to='/mymovies'>My Movie</Link></li>
+          {/* <li><Link to='/mymovies'>My Movie</Link></li> */}
         </ul>
       </div>
   )

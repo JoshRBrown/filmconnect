@@ -166,7 +166,7 @@ class MovieDetail extends React.Component {
 
         return (
             <div className="detailed-movie">
-                <div className=".detailed-movie-poster">
+                <div className="detailed-movie-poster">
                     {this._renderMovie()}
                 </div>
                 <div className="detailed-movie-text">
