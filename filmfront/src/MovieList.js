@@ -12,11 +12,11 @@ class MovieList extends React.Component {
 
   componentDidMount(){
     this._getMovies();
-    setInterval(this._getMovies, 30000)    
+    setInterval(this._getMovies, 50000)    
   };
   
   _getMovies = () => {
-    let randomInt = Math.floor(Math.random() * 300 + 1)
+    let randomInt = Math.floor(Math.random() * 500 + 1)
       fetch(`https://api.themoviedb.org/3/discover/movie?api_key=644f21e59b17cbf67e64dbcba7a57278&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${randomInt}`)
       .then(response => response.json())
       .then(data => (data.results))

@@ -9,17 +9,17 @@ class Movie extends React.Component {
 render(){
   return(
     <a href={`/browse/${this.props.id}`}>
-    <div>
+    <div className='movie-poster'>
       <img src={`https://image.tmdb.org/t/p/w500${this.props.pic}`}/>
-    <h1>
-    {this.props.title}
-    </h1>
-    <p>
-    {this.props.summary}
-    </p>
-    <p>
-    Release date: {this.props.date}
-    </p>
+      <h1>
+      {this.props.title}
+      </h1>
+      <p>
+      {this.props.summary}
+      </p>
+      <p>
+      Release date: {this.props.date}
+      </p>
     </div>
   </a>
   )

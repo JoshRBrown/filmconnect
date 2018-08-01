@@ -9,7 +9,7 @@ class MovieDetail extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            userId: 1,
+            userId: this.props.userID,
             movieId: this.props.match.params.id,
             movieDetail: {},
             reviews: [{
